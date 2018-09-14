@@ -166,7 +166,7 @@ def get_paras():
     paras['input/w'] = 55
     paras['use_batchnorm'] = False
 
-    n_units_b1 = 32
+    n_units_b1 = 16
     paras['b1/conv1/filters'] = n_units_b1
     paras['b1/conv2/filters'] = n_units_b1
     paras['b1/conv3/filters'] = n_units_b1
@@ -180,7 +180,7 @@ def get_paras():
     paras['b1/kernel_size'] = 5
     paras['b1/padding'] = 'same'
 
-    n_units_b2 = 32
+    n_units_b2 = 16
     paras['b2/conv1/filters'] = n_units_b2
     paras['b2/conv2/filters'] = n_units_b2
     paras['b2/conv3/filters'] = n_units_b2
@@ -194,7 +194,7 @@ def get_paras():
     paras['b2/kernel_size'] = 3
     paras['b2/padding'] = 'same'
 
-    n_units_b3 = 16
+    n_units_b3 = 8
     paras['b3/conv1/filters'] = n_units_b3
     paras['b3/conv2/filters'] = n_units_b3
     paras['b3/conv3/filters'] = n_units_b3
@@ -230,7 +230,7 @@ class print_lr(Callback):
         print(K.eval(lr_with_decay))
 
 def train_model(model, paras, start_epoch = 0):
-    version = '010'
+    version = '011'
     _check_dir(f'../model/v{version}')
     prefix = '{}x{}'.format(
                         paras['input/h'], paras['input/w'])
@@ -254,7 +254,7 @@ def train_model(model, paras, start_epoch = 0):
     return model, train_hist
 
 if __name__ == '__main__':
-    os.environ['CUDA_VISIBLE_DEVICES'] = '3'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '1'
     paras = get_paras()
     paras['lr/base'] = 1e-4
     paras['end_time'] = '20180914 20:00:00'
