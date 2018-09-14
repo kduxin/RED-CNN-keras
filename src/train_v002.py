@@ -196,6 +196,6 @@ if __name__ == '__main__':
     os.environ['CUDA_VISIBLE_DEVICES'] = '1'
     paras = get_paras()
     paras['lr/base'] = 1e-4
-    paras['end_time'] = '20180914 13:00:00'
+    paras['end_time'] = '20180914 18:00:00'
     model = model_construction_v002(paras)
     model = train_model(model, paras, 0)
