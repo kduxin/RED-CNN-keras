@@ -94,7 +94,7 @@ def get_paras():
     paras['input/h'] = 55
     paras['input/w'] = 55
     paras['use_batchnorm'] = False
-    n_units = 32
+    n_units = 8
     paras['conv1/filters'] = n_units
     paras['conv2/filters'] = n_units
     paras['conv3/filters'] = n_units
@@ -105,7 +105,7 @@ def get_paras():
     paras['dconv3/filters'] = n_units
     paras['dconv2/filters'] = n_units
     paras['dconv1/filters'] = 1
-    paras['kernel_size'] = 7
+    paras['kernel_size'] = 5
     paras['padding'] = 'same'
 
     paras['kernel_initializer'] = RandomNormal()
@@ -130,7 +130,7 @@ class print_lr(Callback):
         print(K.eval(lr_with_decay))
 
 def train_model(model, paras, start_epoch = 0):
-    version = '007'
+    version = '009'
     _check_dir(f'../model/v{version}')
     prefix = '{}u.{}x{}.k{}x{}'.format(
                         paras['conv1/filters'], paras['input/h'], paras['input/w'],
@@ -155,7 +155,7 @@ def train_model(model, paras, start_epoch = 0):
     return model, train_hist
 
 if __name__ == '__main__':
-    os.environ['CUDA_VISIBLE_DEVICES'] = '2'
+    os.environ['CUDA_VISIBLE_DEVICES'] = '1'
     paras = get_paras()
     paras['lr/base'] = 1e-4
     paras['end_time'] = '20180914 20:00:00'
