@@ -235,7 +235,7 @@ def train_model(model, paras, start_epoch = 0, train_hist = {}):
     prefix = '{}x{}'.format(
                         paras['input/h'], paras['input/w'])
     plot_model(model, '../model/v{}/{}.png'.format(version, prefix))
-    df = ImgDataFeeder('../data/de_800.data.pkl', paras['batch_size'], paras['patch_h'], paras['patch_w'])
+    df = ImgDataFeeder('../data/de_800.data1-3.pkl', paras['batch_size'], paras['patch_h'], paras['patch_w'])
     epoch = start_epoch
     model.save('../model/v{}/{}.{:0>4}.model'.format(version, prefix, epoch))
     open('../model/v{}/{}.{:0>4}.history.pkl'.format(version, prefix, epoch), 'wb').write(pkl.dumps(train_hist))
@@ -258,9 +258,9 @@ def train_model(model, paras, start_epoch = 0, train_hist = {}):
 if __name__ == '__main__':
     os.environ['CUDA_VISIBLE_DEVICES'] = '3'
     paras = get_paras()
-    paras['lr/base'] = 3e-5
+    paras['lr/base'] = 1e-5
     paras['end_time'] = '20180915 12:00:00'
     model = model_construction(paras)
-    model.load_weights('../model/v010/55x55.0530.weights')
-    train_hist = pkl.loads(open('../model/v010/55x55.0530.history.pkl', 'rb').read())
-    model = train_model(model, paras, 530, train_hist)
+    model.load_weights('../model/v010/55x55.0560.weights')
+    train_hist = pkl.loads(open('../model/v010/55x55.0560.history.pkl', 'rb').read())
+    model = train_model(model, paras, 560, train_hist)
