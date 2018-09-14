@@ -229,18 +229,18 @@ class print_lr(Callback):
         lr_with_decay = lr / (1. + decay * K.cast(iterations, K.dtype(decay)))
         print(K.eval(lr_with_decay))
 
-def train_model(model, paras, start_epoch = 0):
+def train_model(model, paras, start_epoch = 0, train_hist = {}):
     version = '010'
-    _check_dir(f'../model/v{version}')
+    _check_dir('../model/v{}'.format(version))
     prefix = '{}x{}'.format(
                         paras['input/h'], paras['input/w'])
     plot_model(model, '../model/v{}/{}.png'.format(version, prefix))
-    df = ImgDataFeeder('../data/de_800.data.pkl', paras['batch_size'], paras['patch_h'], paras['patch_w'])
+    df = ImgDataFeeder('../data/de_800.data2.pkl', paras['batch_size'], paras['patch_h'], paras['patch_w'])
     epoch = start_epoch
-    train_hist = {}
     model.save('../model/v{}/{}.{:0>4}.model'.format(version, prefix, epoch))
     open('../model/v{}/{}.{:0>4}.history.pkl'.format(version, prefix, epoch), 'wb').write(pkl.dumps(train_hist))
-    print(f"Current epoch: {epoch}. Current lr: {model.optimizer.lr}. Model has been saved.")
+    print("Current epoch: {}. Current lr: {}. "
+          "Model has been saved.".format(epoch, model.optimizer.lr))
     while dt.datetime.now() < dt.datetime.strptime(paras['end_time'], 
                                                     '%Y%m%d %H:%M:%S'):
         hist = model.fit_generator(df, epochs = paras['epochs'],
@@ -250,13 +250,17 @@ def train_model(model, paras, start_epoch = 0):
         epoch += paras['epochs']
         model.save_weights('../model/v{}/{}.{:0>4}.weights'.format(version, prefix, epoch))
         open('../model/v{}/{}.{:0>4}.history.pkl'.format(version, prefix, epoch), 'wb').write(pkl.dumps(train_hist))
-        print(f"Current epoch: {epoch}. Current lr: {model.optimizer.lr}. Model has been saved.")
+        print("Current epoch: {}. Current lr: {}. "
+              "Model has been saved.".format(
+                        epoch, model.optimizer.lr))
     return model, train_hist
 
 if __name__ == '__main__':
     os.environ['CUDA_VISIBLE_DEVICES'] = '3'
     paras = get_paras()
-    paras['lr/base'] = 1e-4
-    paras['end_time'] = '20180914 20:00:00'
+    paras['lr/base'] = 3e-5
+    paras['end_time'] = '20180915 12:00:00'
     model = model_construction(paras)
-    model = train_model(model, paras, 0)
+    model.load_weights('../model/v010/55x55.0520.weights')
+    train_hist = pkl.loads(open('../model/v010/55x55.0520.history.pkl', 'rb').read())
+    model = train_model(model, paras, 520, train_hist)

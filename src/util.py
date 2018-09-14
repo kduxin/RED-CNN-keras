@@ -93,4 +93,4 @@ def _append_history(hist, new_hist):
 def _check_dir(dirname):
     if not os.path.exists(dirname):
         os.mkdir(dirname)
-    print(f'Dir created: {dirname}')
+    print('Dir created: {}'.format(dirname))
