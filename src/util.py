@@ -71,8 +71,13 @@ class ImgDataFeeder:
 def _load_all_dicom(folder):
     files = os.listdir(folder)
     imgs = []
-    for file in files:
+    i = 0
+    for file in sorted(files):
+        if file[file.rfind('.')+1:] != 'dcm':
+            continue
+        i += 1
         imgs.append(pydicom.read_file(os.path.join(folder, file)).pixel_array[np.newaxis,:,:,np.newaxis])
+    print("{} dcm files loaded!".format(i))
     imgs = np.concatenate(imgs, axis = 0)
     return imgs
 

@@ -20,7 +20,7 @@ import pydicom
 import pickle as pkl
 from util import _check_dir, _append_history, _load_all_dicom, ImgDataFeeder
 
-def model_construction_v001(paras):
+def model_construction(paras):
     
     inputs = Input(shape=(paras['input/h'], paras['input/w'], 1))
     conv1  = Conv2D(filters = paras['conv1/filters'], kernel_size = paras['kernel_size'], 
@@ -159,5 +159,5 @@ if __name__ == '__main__':
     paras = get_paras()
     paras['lr/base'] = 1e-4
     paras['end_time'] = '20180914 20:00:00'
-    model = model_construction_v001(paras)
+    model = model_construction(paras)
     model = train_model(model, paras, 0)

@@ -6,13 +6,13 @@ import keras
 import numpy as np
 import matplotlib.pyplot as plt
 from util import ImgDataFeeder
-from train_v001 import model_construction_v001, get_paras
+from train_v001 import model_construction, get_paras
 
 paras = get_paras()
 paras['input/h'] = 273
 paras['input/w'] = 273
 paras['kernel_size'] = 5
-model = model_construction_v001(paras)
+model = model_construction(paras)
 # model.load_weights('../model/v001/v1_20180830_96u_930.weight')
 model.load_weights('../model/v001/96u.55x55.k5x5.1340.weights')
 ID = [3, 11, 19]

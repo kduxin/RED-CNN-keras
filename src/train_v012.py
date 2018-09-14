@@ -7,7 +7,7 @@ from keras.models import load_model
 from keras.initializers import RandomNormal
 from keras.callbacks import Callback
 from keras.utils import plot_model
-from keras.layers import Input, Conv2D, Deconv2D, ReLU, Add, BatchNormalization
+from keras.layers import Input, Conv2D, Deconv2D, ReLU, Add, Average, BatchNormalization
 from keras.activations import relu
 from keras.models import Model
 from keras.optimizers import Adam, SGD, Adagrad, RMSprop
@@ -20,7 +20,7 @@ import pydicom
 import pickle as pkl
 from util import _check_dir, _append_history, ImgDataFeeder, _load_all_dicom
 
-def model_construction_v002(paras):
+def model_construction(paras):
     
     inputs = Input(shape=(paras['input/h'], paras['input/w'], 1))
     # branch 1
@@ -258,5 +258,5 @@ if __name__ == '__main__':
     paras = get_paras()
     paras['lr/base'] = 1e-4
     paras['end_time'] = '20180915 00:00:00'
-    model = model_construction_v002(paras)
+    model = model_construction(paras)
     model = train_model(model, paras, 0)

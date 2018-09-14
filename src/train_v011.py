@@ -20,7 +20,7 @@ import pydicom
 import pickle as pkl
 from util import _check_dir, _append_history, ImgDataFeeder, _load_all_dicom
 
-def model_construction_v002(paras):
+def model_construction(paras):
     
     inputs = Input(shape=(paras['input/h'], paras['input/w'], 1))
     # branch 1
@@ -258,5 +258,5 @@ if __name__ == '__main__':
     paras = get_paras()
     paras['lr/base'] = 1e-4
     paras['end_time'] = '20180914 20:00:00'
-    model = model_construction_v002(paras)
+    model = model_construction(paras)
     model = train_model(model, paras, 0)
