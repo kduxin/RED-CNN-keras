@@ -9,7 +9,7 @@ def Dicom2Dataset(dir_X, dir_Y, save_file, thres_X = 4000, thres_Y = 4000,
     data_X = _load_all_dicom(dir_X).astype(np.float32)
     data_Y = _load_all_dicom(dir_Y).astype(np.float32)
     data_X = (data_X + 1000) / thres_X
-    data_Y = (data_X + 1000) / thres_Y
+    data_Y = (data_Y + 1000) / thres_Y
     data_X[data_X > 1] = 1
     data_X[data_X < 0] = 0
     data_Y[data_Y > 1] = 1
