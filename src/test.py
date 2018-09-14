@@ -36,5 +36,5 @@ for i in range(len(ID)):
     contrast[i*h:(i+1)*h, 3*w:]  = denoise_X[i, :, :, 0] - test_X[i, :, :, 0]
 
 f = plt.figure(dpi=200)
-plt.imshow(contrast)
+plt.imshow(contrast, cmap = plt.cm.gray)
 plt.show()
