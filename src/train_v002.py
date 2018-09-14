@@ -169,7 +169,7 @@ class print_lr(Callback):
         print(K.eval(lr_with_decay))
 
 def train_model(model, paras, start_epoch = 0):
-    version = '001'
+    version = '002'
     _check_dir(f'../model/v{version}')
     prefix = '{}x{}'.format(
                         paras['input/h'], paras['input/w'])
