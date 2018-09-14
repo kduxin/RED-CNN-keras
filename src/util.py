@@ -1,6 +1,8 @@
 import numpy as np
+from numpy.random import randint
 import os
 import pydicom
+import pickle as pkl
 
 class ImgDataFeeder:
     

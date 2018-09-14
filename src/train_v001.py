@@ -3,7 +3,6 @@
 from scipy.io import loadmat
 from numpy.random import randint
 import numpy as np
-from construction import model_construction_v1
 from keras.models import load_model
 from keras.initializers import RandomNormal
 from keras.callbacks import Callback
@@ -159,4 +158,4 @@ if __name__ == '__main__':
     paras['lr/base'] = 1e-4
     paras['end_time'] = '20180913 10:00:00'
     model = model_construction_v1(paras)
-    model = train_model_v2(model, paras, 0)
+    model = train_model(model, paras, 0)
