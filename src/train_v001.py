@@ -18,7 +18,7 @@ import datetime as dt
 import os
 import pydicom
 import pickle as pkl
-from util import *
+from util import _check_dir, _append_history, ImgDataFeeder, _load_all_dicom
 
 def model_construction(paras):
     
