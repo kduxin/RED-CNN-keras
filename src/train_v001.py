@@ -109,7 +109,7 @@ def get_paras():
     paras['kernel_initializer'] = RandomNormal()
     paras['padding'] = 'same'
 
-    paras['lr/base']  = 3e-5
+    paras['lr/base']  = 1e-3
     paras['lr/decay'] = 1e-4
 
     paras['batch_size'] = 128
