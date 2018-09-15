@@ -145,7 +145,7 @@ def train_model(model, paras, start_epoch = 0):
                                                     '%Y%m%d %H:%M:%S'):
         hist = model.fit_generator(df, epochs = paras['epochs'],
                                 steps_per_epoch = paras['steps_per_epoch'], 
-                                validation_data = df.get_validset())
+                                validation_steps = 5)
         train_hist = _append_history(train_hist, hist.history)
         epoch += paras['epochs']
         model.save_weights('../model/v{}/{}.{:0>4}.weights'.format(version, prefix, epoch))
