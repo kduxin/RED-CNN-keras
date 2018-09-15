@@ -94,7 +94,7 @@ def get_paras():
     paras['input/h'] = 55
     paras['input/w'] = 55
     paras['use_batchnorm'] = False
-    n_units = 96
+    n_units = 64
     paras['conv1/filters'] = n_units
     paras['conv2/filters'] = n_units
     paras['conv3/filters'] = n_units
