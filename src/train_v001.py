@@ -24,63 +24,63 @@ def model_construction(paras):
     
     inputs = Input(shape=(paras['input/h'], paras['input/w'], 1))
     conv1  = Conv2D(filters = paras['conv1/filters'], kernel_size = paras['kernel_size'], 
-                padding = 'valid', activation = 'relu',
+                padding = paras['padding'], activation = 'relu',
                 kernel_initializer = paras['kernel_initializer'])(inputs)
     if paras['use_batchnorm']:
         conv1 = BatchNormalization()(conv1)
 
     conv2  = Conv2D(filters = paras['conv2/filters'], kernel_size = paras['kernel_size'], 
-                padding = 'valid', activation = 'relu',
+                padding = paras['padding'], activation = 'relu',
                 kernel_initializer = paras['kernel_initializer'])(conv1)
     if paras['use_batchnorm']:
         conv2 = BatchNormalization()(conv2)
 
     conv3  = Conv2D(filters = paras['conv3/filters'], kernel_size = paras['kernel_size'], 
-                padding = 'valid', activation = 'relu',
+                padding = paras['padding'], activation = 'relu',
                 kernel_initializer = paras['kernel_initializer'])(conv2)
     if paras['use_batchnorm']:
         conv3 = BatchNormalization()(conv3)
 
     conv4  = Conv2D(filters = paras['conv4/filters'], kernel_size = paras['kernel_size'], 
-                padding = 'valid', activation = 'relu',
+                padding = paras['padding'], activation = 'relu',
                 kernel_initializer = paras['kernel_initializer'])(conv3)
     if paras['use_batchnorm']:
         conv4 = BatchNormalization()(conv4)
 
     conv5  = Conv2D(filters = paras['conv5/filters'], kernel_size = paras['kernel_size'], 
-                padding = 'valid', activation = 'relu',
+                padding = paras['padding'], activation = 'relu',
                 kernel_initializer = paras['kernel_initializer'])(conv4)
     if paras['use_batchnorm']:
         conv5 = BatchNormalization()(conv5)
 
     dconv5 = Deconv2D(filters = paras['dconv5/filters'], kernel_size = paras['kernel_size'],
-                padding = 'valid',
+                padding = paras['padding'],
                 kernel_initializer = paras['kernel_initializer'])(conv5)
     drelu5 = ReLU()(Add()([dconv5, conv4]))
     if paras['use_batchnorm']:
         drelu5 = BatchNormalization()(drelu5)
 
     dconv4 = Deconv2D(filters = paras['dconv4/filters'], kernel_size = paras['kernel_size'],
-                padding = 'valid', activation = 'relu',
+                padding = paras['padding'], activation = 'relu',
                 kernel_initializer = paras['kernel_initializer'])(drelu5)
     if paras['use_batchnorm']:
         dconv4 = BatchNormalization()(dconv4)
 
     dconv3 = Deconv2D(filters = paras['dconv3/filters'], kernel_size = paras['kernel_size'],
-                padding = 'valid',
+                padding = paras['padding'],
                 kernel_initializer = paras['kernel_initializer'])(dconv4)
     drelu3 = ReLU()(Add()([dconv3, conv2]))
     if paras['use_batchnorm']:
         drelu3 = BatchNormalization()(drelu3)
 
     dconv2 = Deconv2D(filters = paras['dconv2/filters'], kernel_size = paras['kernel_size'],
-                padding = 'valid', activation = 'relu',
+                padding = paras['padding'], activation = 'relu',
                 kernel_initializer = paras['kernel_initializer'])(drelu3)
     if paras['use_batchnorm']:
         dconv2 = BatchNormalization()(dconv2)
 
     dconv1 = Deconv2D(filters = paras['dconv1/filters'], kernel_size = paras['kernel_size'],
-                padding = 'valid',
+                padding = paras['padding'],
                 kernel_initializer = paras['kernel_initializer'])(dconv2)
     outputs = ReLU()(Add()([dconv1, inputs]))
 
@@ -107,8 +107,9 @@ def get_paras():
     paras['dconv1/filters'] = 1
     paras['kernel_size'] = 5
     paras['kernel_initializer'] = RandomNormal()
+    paras['padding'] = 'same'
 
-    paras['lr/base']  = 1e-4
+    paras['lr/base']  = 3e-5
     paras['lr/decay'] = 1e-4
 
     paras['batch_size'] = 128
@@ -134,7 +135,7 @@ def train_model(model, paras, start_epoch = 0):
                         paras['conv1/filters'], paras['input/h'], paras['input/w'],
                         paras['kernel_size'], paras['kernel_size'])
     plot_model(model, '../model/v{}/{}.png'.format(version, prefix))
-    df = ImgDataFeeder('../data/de_800.data.pkl', paras['batch_size'], paras['patch_h'], paras['patch_w'])
+    df = ImgDataFeeder('../data/de_800.data1-3.pkl', paras['batch_size'], paras['patch_h'], paras['patch_w'])
     epoch = start_epoch
     train_hist = {}
     model.save('../model/v{}/{}.{:0>4}.model'.format(version, prefix, epoch))
@@ -156,6 +157,6 @@ if __name__ == '__main__':
     os.environ['CUDA_VISIBLE_DEVICES'] = '1'
     paras = get_paras()
     paras['lr/base'] = 1e-4
-    paras['end_time'] = '20180913 10:00:00'
+    paras['end_time'] = '20180916 10:00:00'
     model = model_construction(paras)
     model = train_model(model, paras, 0)
