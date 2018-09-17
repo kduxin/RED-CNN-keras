@@ -113,3 +113,4 @@ dmypy.json
 # tsap
 /model/
 /data/
+/image/
